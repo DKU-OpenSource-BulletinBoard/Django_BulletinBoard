@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'board.apps.BoardConfig', # board app 사용 명시
+    'bulletinboard.apps.BulletinboardConfig', # bulletinboard app 사용 명시
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,3 +123,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Summernote setting
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+INSTALLED_APPS += ['django_summernote']
+
+import os
+MEDIA_URL = '/mdeia/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
