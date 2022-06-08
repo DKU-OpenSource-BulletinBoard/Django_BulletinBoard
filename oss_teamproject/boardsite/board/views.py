@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import User
+from argon2 import PasswordHasher
 from django.http import HttpResponse
 
 # 게시판 프로그램 메인 화면 구현
@@ -32,7 +33,7 @@ def register(request):
         else:
             user = User(
                 u_id = uid,
-                u_pw = upw,
+                u_pw = PasswordHasher().hash(upw),
                 u_name = uname,
                 u_phone = uphone
             )
