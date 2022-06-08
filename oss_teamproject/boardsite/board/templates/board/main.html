@@ -1,11 +1,17 @@
-<h1 style="text-align:center;"> This is main page </h1>
+<head>
+    <h1 style="text-align:center;"> This is main page </h1>
+</head>
+<body>
 <hr>
+<h3>DKU OPEN-SOURCE DJANGO PROJECT</h3>
 <p>select option below</p>
-bulletin board page: <button><a href="http://127.0.0.1:8000/bulletin">going main bulletin board page</a></button>
-<br>
-user information: <button><a href="http://127.0.0.1:8000/info"> see all user information </a></button>
-<br>
-sign up page : <button><a href="http://127.0.0.1:8000/register">register</a></button>
-<br>
-admin page : <button><a href="http://127.0.0.1:8000/admin">admin</a></button>
-<br>
+    <br>
+    <button style="border: 1px black solid; margin: 5px 0px;"><a href="/">home</a></button>
+    <button style="border: 1px black solid; margin: 5px 0px;"><a href="http://127.0.0.1:8000/info">유저 정보</a></button>
+    <button style="border: 1px black solid; margin: 5px 0px;"><a href="http://127.0.0.1:8000/register">회원 가입</a></button>
+    <button style="border: 1px black solid; margin: 5px 0px;"><a href="http://127.0.0.1:8000/admin">관리자 페이지</a></button>
+    <button style="border: 1px black solid; margin: 5px 0px;"><a href="http://127.0.0.1:8000/bulletinboard/">게시판</a></button>
+    <hr>
+{% block contents %}
+{% endblock contents %}
+</body>
