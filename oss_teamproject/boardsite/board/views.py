@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import User
 from argon2 import PasswordHasher
 from django.http import HttpResponse
+from .forms import RegisterForm
 
 # 게시판 프로그램 메인 화면 구현
 def main(request):
@@ -15,6 +16,8 @@ def bulletin(request):
 def userinfo(request):
     return render(request, 'board/userinfo.html')
 
+
+# 사용자 정보 등록
 def register(request):
     if request.method == 'GET':
         return render(request, 'board/register.html')
