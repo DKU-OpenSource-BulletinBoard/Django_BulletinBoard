@@ -2,35 +2,34 @@ from django import forms
 from .models import User
 from argon2 import PasswordHasher
 
+
 class RegisterForm(forms.ModelForm):
-    user_id = forms.CharField(
-        label = '아이디',
+    u_id = forms.CharField(
+        label='id',
         required=True,
         widget=forms.TextInput(
             attrs={
-                'class' : 'user-id',
-                'placeholder' : '아이디'
+                'class': 'user-id',
+                'placeholder': '아이디 입력'
             }
         ),
-        error_messages={'required':'아이디를 입력해주세요.'}
-
+        error_messages={'required': '반드시 아이디를 입력해주세요!'}
     )
 
-    user_pw = forms.CharField(
-        label='비밀번호',
+    u_pw = forms.CharField(
+        label='pw',
         required=True,
         widget=forms.PasswordInput(
             attrs={
                 'class': 'user-pw',
-                'placeholder': '비밀번호'
+                'placeholder': '비밀번호 입력'
             }
         ),
-        error_messages={'required': '비밀번호를 입력해주세요.'}
-
+        error_messages={'required': '반드시 비밀번호를 입력해주세요!'}
     )
 
-    user_pw_confirm = forms.CharField(
-        label='비밀번호 확인',
+    u_pw_confirm = forms.CharField(
+        label='re-pw',
         required=True,
         widget=forms.PasswordInput(
             attrs={
@@ -38,71 +37,70 @@ class RegisterForm(forms.ModelForm):
                 'placeholder': '비밀번호 확인'
             }
         ),
-        error_messages={'required': '비밀번호가 일치하지 않습니다.'}
-
+        error_messages={'required': '비밀번호가 일치하지 않습니다!'}
     )
 
-    user_name = forms.CharField(
-        label='이름',
+    u_name = forms.CharField(
+        label='name',
         required=True,
         widget=forms.TextInput(
             attrs={
                 'class': 'user-name',
-                'placeholder': '이름'
+                'placeholder': '사용할 이름 입력'
             }
         ),
-        error_messages={'required': '닉네임을 입력해주세요'}
-
+        error_messages={'required': '반드시 사용할 이름을 입력해주세요!'}
     )
 
-    user_email = forms.EmailField(
-        label='이메일',
+    u_phone = forms.CharField(
+        label='phone',
         required=True,
         widget=forms.TextInput(
             attrs={
-                'class': 'user-email',
-                'placeholder': '이메일'
+                'class': 'u-phone',
+                'placeholder': '사용자 전화번호 입력'
             }
         ),
-        error_messages={'required': '이메일을 입력해주세요'}
-
+        error_messages={'required': '반드시 전화번호를 입력해주세요!'}
     )
 
     field_order = [
-        'user_id',
-        'user_pw',
-        'user_pw_confirm',
-        'user_name',
-        'user_email'
+        'u_id',
+        'u_pw',
+        'u_pw_confirm',
+        'u_name',
+        'u_phone'
     ]
+
 
     class Meta:
         model = User
-        field = [
+        fields = [
             'u_id',
             'u_pw',
             'u_name',
-            'u_email'
+            'u_phone'
         ]
 
+
     def clean(self):
-        cleanned_data = super().clean()
+        cleaned_data = super().clean()
 
-        user_id = cleanned_data.get('user_id','')
-        user_pw = cleanned_data.get('user_pw', '')
-        user_pw_confirm = cleanned_data.get('user_pw_confirm', '')
-        user_name = cleanned_data.get('user_name', '')
-        user_email = cleanned_data.get('user_email', '')
+        u_id = cleaned_data.get('u_id', '')
+        u_pw = cleaned_data.get('u_pw', '')
+        u_pw_confirm = cleaned_data.get('u_pw_confirm', '')
+        u_name = cleaned_data.get('u_name', '')
+        u_phone = cleaned_data.get('u_phone', '')
 
-        if user_pw != user_pw_confirm :
-            return self.add_error('user_pw_confirm', '비밀번호가 다릅니다.')
-        elif not (4 <= len(user_id) <= 16) :
-            return self.add_error('user_id', '아이디는 4~16자로 입력해주세요')
-        elif 8 > len(user_pw) :
-            return self.add_error('user_pw', '비밀번호는 8자 이상으로 적어주세요')
-        else :
-            self.user_id = user_id
-            self.user_pw = user_pw
-            self.user_pw_confirm = user_pw_confirm
-            self.user_name = user_name
-            self.user_email = user_email
+        if u_pw != u_pw_confirm:
+            return self.add_error('u_pw_confirm', '비밀번호가 일치하지 않습니다!!')
+        elif not (5 <= len(u_id) <= 20):
+            return self.add_error('u_id', '아이디는 5~20자로 입력해주세요')
+        elif 6 > len(u_pw):
+            return self.add_error('u_pw', '보안을 위해 비밀번호는 6자 이상으로 적어주세요')
+        else:
+            self.u_id = u_id
+            self.u_pw = u_pw
+            self.u_pw_confirm = u_pw_confirm
+            self.u_name = u_name
+            self.u_phone = u_phone
