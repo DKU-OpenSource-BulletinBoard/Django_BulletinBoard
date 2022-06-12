@@ -26,24 +26,22 @@ def register(request):
         return render(request, 'board/register.html', context)
 
     elif request.method == 'POST':
-        u_id = request.POST.get('id','')
-        u_pw = request.POST.get('pw','')
-        u_pw_confirm = request.POST.get('re-pw','')
-        u_name = request.POST.get('name', '')
-        u_phone = request.POST.get('phone', '')
-
-        if (u_id or u_pw or u_pw_confirm or u_name or u_phone) == '': # 빈 칸이 존재한다면 다시 페이지 로드
-            return redirect('/board/register')
-        elif u_pw != u_pw_confirm:  # 비밀번호 확인 창과 일치하지 않다면 페이지 다시 로드
-            return redirect('/board/register')
-        else:
+        if register_form.is_valid():
             user = User(
-                u_id = u_id,
-                u_pw = PasswordHasher().hash(u_pw),
-                u_name = u_name,
-                u_phone = u_phone
+                user_id = register_form.u_id,
+                user_pw = register_form.u_pw,
+                user_name = register_form.u_name,
+                user_phone = register_form.u_phone
+
             )
             user.save()
-        return redirect('/')
+            return redirect('/')
+        else:
+            context['forms'] = register_form
+            if register_form.errors:
+                for value in register_form.errors.values():
+                    context['error'] = value
+        return render(request, 'user/register.html', context)
+
 
 # Create your views here.

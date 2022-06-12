@@ -3,6 +3,7 @@ from .models import User
 from argon2 import PasswordHasher
 
 
+
 class RegisterForm(forms.ModelForm):
     u_id = forms.CharField(
         label='id',
@@ -13,7 +14,8 @@ class RegisterForm(forms.ModelForm):
                 'placeholder': '아이디 입력'
             }
         ),
-        error_messages={'required': '반드시 아이디를 입력해주세요!'}
+        error_messages={'required': '아이디를 입력해주세요!',
+                        'unique' : '중복된 아이디입니다.'}
     )
 
     u_pw = forms.CharField(
