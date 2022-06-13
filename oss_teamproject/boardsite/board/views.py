@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import User
 from argon2 import PasswordHasher
 from django.http import HttpResponse
-from .forms import RegisterForm
+from .forms import RegisterForm, LoginForm
 
 # 게시판 프로그램 메인 화면 구현
 def main(request):
@@ -16,6 +16,24 @@ def bulletin(request):
 def userinfo(request):
     return render(request, 'board/userinfo.html')
 
+# 로그인
+def login(request):
+    loginform = LoginForm()
+    context = {'forms' : loginform }
+
+    if request.method == 'GET':
+        return render(request, 'user/login.html', context)
+    elif request.method == 'POST':
+        loginform = LoginForm(request.POST)
+
+        if loginform.is_valid():
+            return redirect('/')
+        else:
+            context['forms'] = loginform
+            if loginform.errors:
+                for value in loginform.errors.values():
+                    context['error'] = value
+        return render(request, 'board/login.html', context)
 
 # 사용자 정보 등록
 def register(request):

@@ -1,8 +1,58 @@
 from django import forms
 from .models import User
-from argon2 import PasswordHasher
+from argon2 import PasswordHasher, exceptions
 
+class LoginForm(forms.Form):
+    u_id = forms.CharField(
+        max_length=32,
+        label='id',
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'user-id',
+                'placeholder': '아이디'
+            }
+        ),
+        error_messages={'required': '아이디를 입력해주세요!'}
 
+    )
+    u_pw = forms.CharField(
+        max_length=128,
+        label='pw',
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'user-pw',
+                'placeholder': '비밀번호'
+            }
+        ),
+        error_messages={'required': '비밀번호를 입력해주세요!'}
+    )
+
+    field_order = [
+        'u_id',
+        'u_pw',
+    ]
+    def clean(self):
+        cleaned_data = super().clean()
+
+        u_id = cleaned_data.get('u_id', '')
+        u_pw = cleaned_data.get('u_pw', '')
+
+        if u_id =='':
+            return self.add_error('u_id', '아이디를 다시 입력해주세요.')
+        elif u_pw == '':
+            return self.add_error('u_pw', '비밀번호를 다시 입력해주세요.')
+        else:
+            try:
+                user = User.objects.get(u_id=u_id)
+            except User.DoesNotExist:
+                return self.add_error('user_id','아이디가 존재하지 않습니다.')
+
+            try:
+                PasswordHasher().verify(user.u_id, u_pw)
+            except exceptions.VerificationError:
+                return self.add_error('u_pw', '비밀번호가 다릅니다.')
 
 class RegisterForm(forms.ModelForm):
     u_id = forms.CharField(

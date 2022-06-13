@@ -1,0 +1,22 @@
+{% extends 'board/main.html' %}
+{% block contents %}
+<div>로그인 페이지</div>
+<form action = "" method ="POST">
+    {% csrf_token %}
+
+    {% for form in forms %}
+    <div>
+        <label for = "{{ form.id_for_label }}"> {{ form.label }} </label>
+        {{form}}
+    </div>
+
+    {% endfor %}
+
+    {% for form in forms %}
+    {{ form.errors }}
+    {% endfor %}
+
+    <button type="submit" name="register-submit" value="register">로그인하기</button>
+</form>
+
+{% endblock contents %}
