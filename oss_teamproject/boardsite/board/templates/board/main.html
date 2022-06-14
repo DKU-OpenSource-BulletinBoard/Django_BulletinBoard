@@ -28,10 +28,10 @@
         <button id = "btn_admin" style="border: 1px black solid; margin: 5px 0px;"><a href="http://127.0.0.1:8000/admin">관리자 페이지</a></button>
         <button id = "btn_bulletin" style="border: 1px black solid; margin: 5px 0px;"><a href="http://127.0.0.1:8000/bulletinboard/">게시판</a></button>
         {% if login_session %}
-        <a href="{% url 'user:logout' %}"><button>로그아웃</button></a>
+            <button id = btn_logout" style="border: 1px black solid; margin: 5px 0px;"><a href="{% url 'user:logout' %}">로그아웃</a></button>
         {% else %}
-        <button id = "btn_signup" style="border: 1px black solid; margin: 5px 0px;"><a href="http://127.0.0.1:8000/register">회원 가입</a></button>
-        <button id = "btn_login" style="border: 1px black solid; margin: 5px 0px;"><a href="http://127.0.0.1:8000/login">로그인</a></button>
+            <button id = "btn_signup" style="border: 1px black solid; margin: 5px 0px;"><a href="http://127.0.0.1:8000/register">회원 가입</a></button>
+            <button id = "btn_login" style="border: 1px black solid; margin: 5px 0px;"><a href="http://127.0.0.1:8000/login">로그인</a></button>
         {% endif %}
     </div>
     <hr>

@@ -40,7 +40,7 @@ class LoginForm(forms.Form):
         u_id = cleaned_data.get('u_id', '')
         u_pw = cleaned_data.get('u_pw', '')
 
-        if u_id =='':
+        if u_id == '':
             return self.add_error('u_id', '아이디를 반드시 입력해주세요.')
         elif u_pw == '':
             return self.add_error('u_pw', '비밀번호를 다시 입력해주세요.')
@@ -56,7 +56,6 @@ class LoginForm(forms.Form):
                 return self.add_error('u_pw', '비밀번호가 다릅니다.')
 
             self.login_session = user.u_id
-
 
 class RegisterForm(forms.ModelForm):
     u_id = forms.CharField(

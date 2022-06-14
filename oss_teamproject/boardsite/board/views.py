@@ -6,7 +6,9 @@ from .forms import RegisterForm, LoginForm
 
 # 게시판 프로그램 메인 화면 구현
 def main(request):
-    return render(request, 'board/main.html')
+    login_session = request.session.get('login_session', '')
+    context = {'login_session':login_session}
+    return render(request, 'board/main.html', context)
 
 # 게시판 화면
 def bulletin(request):
@@ -29,6 +31,7 @@ def login(request):
 
         if loginform.is_valid():
             request.session['login_session'] = loginform.login_session
+            request.session.set_expiry(0)
             return redirect('/')
         else:
             context['forms'] = loginform
@@ -70,16 +73,11 @@ def logout(request):
     return redirect('/')
 
 
-
-
 def hello(request):
     context = {}
-
-    login_session = request.session.get('login_sesiion','')
-
+    login_session = request.session.get('login_session','')
     if login_session == '':
-        context['login_sesiion'] = False
+        context['login_session'] = False
     else:
-        context['login_sesiion'] = True
-
-    return render(request, 'board/index,html', context)
+        context['login_session'] = True
+    return render(request, 'board/main.html', context)
