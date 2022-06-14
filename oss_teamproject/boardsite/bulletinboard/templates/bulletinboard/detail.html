@@ -1,0 +1,22 @@
+{% extends 'board/main.html' %}
+{% block contents %}
+
+<div>게시글 내용</div>
+<hr>
+<div>
+    <b> 게시판 카테고리 : </b> <label style="color: darkolivegreen"> {{ board.board_category }} </label>
+</div>
+<div>
+    <b> 게시글 작성자: </b> <label style="color: dodgerblue"> {{ board.username }} </label> // <b> 작성된 날짜: </b> <label style="color: darkgoldenrod"> {{ board.write_date }} </label> // <b> 조회수: </b>  <label style="color: rosybrown"> {{ board.view_count }} </label>
+</div>
+<div>
+    <b> 글 제목: </b>  <label style="color: mediumpurple"> {{ board.title }} </label>
+</div>
+<div>
+    <b> 글 내용: </b> {{ board.contents|safe }}
+</div>
+
+<button><a href="">수정하기</a></button>
+<button><a href="">삭제하기</a></button>
+
+{% endblock contents %}}

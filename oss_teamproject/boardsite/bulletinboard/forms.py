@@ -48,8 +48,8 @@ class BulletinWriteForm(forms.ModelForm):
         cleaning = super().clean()
 
         title = cleaning.get('title', '')
-        contents = cleaning.get('contents, ')
-        board_category = cleaning.get('board_name', 'Free')
+        contents = cleaning.get('contents', '')
+        board_category = cleaning.get('board_category', 'Free')
 
         if  contents == '':
             self.add_error('contents', '글 내용에 해당하는 필드를 입력하세요.')

@@ -3,10 +3,17 @@ from .forms import BulletinWriteForm
 from .models import BulletinBoard
 from board.models import User
 from board.decorators import login_required
+from django.shortcuts import get_object_or_404
 
 def board_view(request):
     login_session = request.session.get('login_session', '')
     context = {'login_session':login_session}
+    sp_board = BulletinBoard.objects.filter(board_category = 'Sports')
+    pol_board = BulletinBoard.objects.filter(board_category = 'Politics')
+    free_board = BulletinBoard.objects.filter(board_category = 'Free')
+    context['sp_board'] = sp_board
+    context['pol_board'] = pol_board
+    context['free_board'] = free_board
     return render(request,'bulletinboard/board_view.html', context)
 
 # 글 쓰기
@@ -28,12 +35,21 @@ def write(request):
             bulletinboard = BulletinBoard(
                 title = w_form.title,
                 contents = w_form.contents,
-                writer_info = writer_info,
+                username = writer_info,
                 board_category = w_form.board_category
             )
             bulletinboard.save()
-            return redirect ('/bulletinboard')
+            return redirect('/bulletinboard')
         else:
-            context['forms'] = w_
+            context['forms'] = w_form
+            if w_form.errors:
+                for v in w_form.errors.values():
+                    context['error'] = v
+                return render(request, 'bulletinboard/write_content.html', context)
 
-# Create your views here.
+def bulletin_detail(request, pk):
+    login_session = request.session.get('login_session', '')
+    context = {'login_session':login_session}
+    board = get_object_or_404(BulletinBoard, id=pk)
+    context['board'] = board
+    return render(request, 'bulletinboard/detail.html', context)

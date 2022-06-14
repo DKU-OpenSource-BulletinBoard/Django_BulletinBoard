@@ -1,6 +1,63 @@
 {% extends 'board/main.html' %}
 {% block contents %}
-<p>bulletin board</p>
+<style>
+    .bulletin {
+        display: flex;
+    }
 
+    .free-board {
+        width: 33%;
+        padding-right: 10px;
+    }
+    .pol-board {
+        width: 33%;
+        border-left: 2px black solid;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .sp-board {
+        width: 33%;
+        border-left: 2px black solid;
+        padding-left: 10px;
+    }
+</style>
+<p>작성된 글 목록</p>
+<hr>
+<div class = "bulletin">
+    <div class="free-board">
+        <p style="text-align: center;"> - 자유 게시판 - </p>
+        <hr>
+        {% for b in free_board %}
+        {% if b %}
+        <a href='/bulletinboard/detail/{{ b.id }}' target='_self'>
+            <div>{{ b.title }} / {{ b.username }} / {{ b.write_date }} </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+     <div class="pol-board">
+        <p style="text-align: center;"> - 정치 게시판 - </p>
+         <hr>
+        {% for b in pol_board %}
+        {% if b %}
+         <a href='/bulletinboard/detail/{{ b.id }}' target='_self'>
+            <div>{{ b.title }} / {{ b.username }} / {{ b.write_date }} </div>
+         </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="sp-board">
+        <p style="text-align: center;"> - 스포츠 게시판 - </p>
+        <hr>
+        {% for b in sp_board %}
+        {% if b %}
+        <a href='/bulletinboard/detail/{{ b.id }}' target='_self'>
+            <div>{{ b.title }} / {{ b.username }} / {{ b.write_date }} </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<hr>
 <button><a href="http://127.0.0.1:8000/bulletinboard/write">글 작성</a></button>
 {% endblock contents %}
