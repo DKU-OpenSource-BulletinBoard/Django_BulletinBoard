@@ -1,13 +1,28 @@
 {% extends 'board/main.html' %}
 {% block contents %}
-<h1 style="text-align: center;">user information</h1>
+<div>User Information page</div>
 <hr>
-<p> 사용자 정보 게시 페이지 </p>
-Main page: <button><a href="http://127.0.0.1:8000">go to main page</a></button>
-<br>
-Bulletin board page: <button><a href="http://127.0.0.1:8000/bulletin">going main bulletin board page</a></button>
-<br>
-sign up page : <button><a href="http://127.0.0.1:8000/register">register</a></button>
-<br>
-admin page : <button><a href="http://127.0.0.1:8000/admin"></a></button>
+<ul>
+    {% if u_list %}
+    <table border = '1' bordercolor="black" width = "40%" height = "120">
+        <caption style="color: olivedrab"><b>user information</b></caption>
+        <thead>
+        <tr>
+            <th bgcolor = "#a9a9a9" width="30%">user id</th>
+            <th bgcolor="#a9a9a9">user name</th>
+            <th bgcolor="#a9a9a9">user phone num.</th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for i in u_list %}
+        <tr>
+            <td style="text-align:center;">{{ i.u_id }}</td>
+            <td style="text-align:center;">{{ i.u_name }}</td>
+            <td style="text-align:center;">{{ i.u_phone }}</td>
+        </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</ul>
 {% endblock contents %}

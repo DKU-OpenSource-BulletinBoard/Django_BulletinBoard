@@ -14,9 +14,10 @@ def main(request):
 def bulletin(request):
     return render(request, 'board/bulletinboard.html')
 
-# 사용자 계정 정보 보기
+# 등록된 사용자 정보 보기 (id, 이름, phone number)
 def userinfo(request):
-    return render(request, 'board/userinfo.html')
+    u_list = User.objects.all()
+    return render(request, 'board/userinfo.html', {'u_list': u_list})
 
 # 로그인
 def login(request):
