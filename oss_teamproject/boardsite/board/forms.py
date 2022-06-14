@@ -55,6 +55,8 @@ class LoginForm(forms.Form):
             except exceptions.VerificationError:
                 return self.add_error('u_pw', '비밀번호가 다릅니다.')
 
+            self.login_session = user.u_id
+
 
 class RegisterForm(forms.ModelForm):
     u_id = forms.CharField(

@@ -28,6 +28,7 @@ def login(request):
         loginform = LoginForm(request.POST)
 
         if loginform.is_valid():
+            request.session['login_session'] = loginform.login_session
             return redirect('/')
         else:
             context['forms'] = loginform
@@ -63,4 +64,22 @@ def register(request):
         return render(request, 'board/register.html', context)
 
 
-# Create your views here.
+# 로그아웃
+def logout(request):
+    request.session.flush()
+    return redirect('/')
+
+
+
+
+def hello(request):
+    context = {}
+
+    login_session = request.session.get('login_sesiion','')
+
+    if login_session == '':
+        context['login_sesiion'] = False
+    else:
+        context['login_sesiion'] = True
+
+    return render(request, 'board/index,html', context)
