@@ -7,9 +7,8 @@
     {% for form in forms %}
     <div>
         <label for = "{{ form.id_for_label }}"> {{ form.label }} </label>
-        {{form}}
+        {{ form }}
     </div>
-
     {% endfor %}
 
     {% for form in forms %}
